@@ -46,6 +46,10 @@ header {
   background-color: #006ba1;
   border-bottom: 1px solid #004364;
   clear: both;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .wrapper {
