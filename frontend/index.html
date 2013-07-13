@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="css/main.css" />
 
     <script src="js/vendor/jquery-1.9.1.min.js"></script>
-    <script src="js/main.js"></script>
 </head>
 <body>
 
@@ -22,8 +21,10 @@
         </header>
 
         <form class="search">
-            <label class="search__label" for="search">Enter your course:</label>
-            <input class="search__input" id="search" type="text" title="Enter your course" />
+            <input class="search__input" id="search" type="text" title="Enter your course" placeholder="Enter your course" tabindex="1" />
+            <div class="search__example">
+                Example: <a href="#">Computer Science</a>
+            </div>
         </form>
 
         <div class="layout__fake-footer"></div>
