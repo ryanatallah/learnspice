@@ -7,14 +7,28 @@ module.exports = function(sockets, socket) {
     // User Stuff
 
     socket.on('check:tempuser', function(data) {
-        user.validTemp(data.userid, data.username, function() {
-            socket.emit('check:tempuser', data);
+        user.validTemp(data.userid, data.username, function(results) {
+            if (results) {
+                socket.emit('check:tempuser', {
+                    userid: results[0]._id,
+                    username: results[0].username
+                });
+            } else {
+                socket.emit('check:tempuser', results);
+            }
         });
     });
 
     socket.on('check:user', function(data) {
-        user.valid(data.userid, data.username, function() {
-            socket.emit('check:user', data);
+        user.valid(data.userid, data.username, function(results) {
+            if (results) {
+                socket.emit('check:user', {
+                    userid: results[0]._id,
+                    username: results[0].username
+                });
+            } else {
+                socket.emit('check:user', results);
+            }
         });
     });
 
@@ -31,6 +45,7 @@ module.exports = function(sockets, socket) {
 
     socket.on('create:tempuser', function(data) {
         user.createTemp(function(results) {
+            console.log('fail');
             if (results.length) {
                 socket.emit('create:tempuser', {
                     userid: results[0]._id,
@@ -44,7 +59,7 @@ module.exports = function(sockets, socket) {
         user.validTemp(data.userid, data.oldUsername, function(){
             user.validUsername(data.username, function(result) {
                 if(result) {
-                    user.create(data.username, data.email, data.password, function(results) {
+                    user.create(data.userid, data.username, data.email, data.password, function(results) {
                         if (results.length) {
                             socket.emit('create:user', {
                                 userid: results[0]._id,
@@ -55,10 +70,11 @@ module.exports = function(sockets, socket) {
                 } else {
                     user.authenticate(data.username, data.password, function(results) {
                         if (results.length) {
-                            user.transfer(data.userid, results[0]._id);
-                            socket.emit('authenticate:user', {
-                                userid: results[0]._id,
-                                username: results[0].username
+                            user.transfer(data.userid, results[0]._id, function () {
+                                socket.emit('authenticate:user', {
+                                    userid: results[0]._id,
+                                    username: results[0].username
+                                });
                             });
                         }
                     });
@@ -77,7 +93,6 @@ module.exports = function(sockets, socket) {
                 sockets.emit('create:note', {
                     noteid: results[0]._id,
                     title: results[0].title,
-                    hash: results[0].hash,
                     shortlink: results[0].shortlink
                 });
             }
@@ -90,7 +105,6 @@ module.exports = function(sockets, socket) {
                 sockets.emit('change:notetitle', {
                     noteid: results[0]._id,
                     title: results[0].title,
-                    hash: results[0].hash,
                     shortlink: results[0].shortlink
                 });
             });

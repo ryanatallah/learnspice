@@ -67,7 +67,9 @@ module.exports = {
             }).toArray(function(err, results) {
                 console.dir(results);
                 if(results.length){
-                    callback();
+                    callback(results);
+                } else {
+                    callback(undefined);
                 }
             });
         });
@@ -90,7 +92,9 @@ module.exports = {
             }).toArray(function(err, results) {
                 console.dir(results);
                 if(results.length){
-                    callback();
+                    callback(results);
+                } else {
+                    callback(undefined);
                 }
             });
         });
@@ -102,7 +106,7 @@ module.exports = {
             }
 
             var md5 = crypto.createHash("md5");
-            md5.update(new Date().toJSON() + 'hash', 'utf8');
+            md5.update(new Date().toJSON() + 'username', 'utf8');
             var username = md5.digest('base64');
             var date_created = new Date();
 
@@ -122,7 +126,7 @@ module.exports = {
             });
         });
     },
-    create: function(username, email, password, callback) {
+    create: function(userid, username, email, password, callback) {
         MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
             if (err) {
                 throw err;
@@ -136,21 +140,22 @@ module.exports = {
             sha256.update(password + salt, 'utf8');
             var password_hash = sha256.digest('base64');
 
-            var date_created = new Date();
+            var date_latest = new Date();
 
             var collection = db.collection('users');
-            collection.insert({
+            collection.update({_id: new ObjectId(userid)}, {$set:{
                 username: username,
                 email: email,
                 salt: salt,
                 password_hash: password_hash,
-                date_created: date_created,
-                date_latest: date_created
-            },
+                date_latest: date_latest
+            }},
             function(err, docs) {
-                console.dir(docs);
-                db.close();
-                callback(docs);
+                collection.find({_id: new ObjectId(userid)}, function(err, docs) {
+                    console.dir(docs);
+                    db.close();
+                    callback(docs);
+                });
             });
         });
     },

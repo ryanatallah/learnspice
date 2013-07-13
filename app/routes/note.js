@@ -29,13 +29,7 @@ module.exports = {
                 throw err;
             }
 
-            var md5 = crypto.createHash("md5");
-            md5.update(new Date().toJSON(), 'utf8');
-            var hash = md5.digest('base64');
-
-            var md5 = crypto.createHash("md5");
-            md5.update(new Date().toJSON() + 'shortlink', 'utf8');
-            var shortlink = md5.digest('base64');
+            var shortlink = Math.random().toString(36).slice(2).substring(0, 4);
 
             var collaborators = [userid];
             var date_created = new Date();
@@ -44,7 +38,6 @@ module.exports = {
             collection.insert({
                 title: title,
                 userid: userid,
-                hash: hash,
                 shortlink: shortlink,
                 collaborators: collaborators,
                 date_created: date_created,

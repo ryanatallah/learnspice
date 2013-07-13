@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', function($scope, $cookies, socket) {
     if ($cookies.user) {
         var user = JSON.parse($cookies.user);
+        console.log(user);
         if (user.temp) {
             socket.emit('check:tempuser', {userid: user.userid, username: user.username});
         } else {
@@ -15,14 +16,24 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     }
 
     socket.on('check:tempuser', function(data) {
-        $scope.user = data;
-        $scope.user.temp = true;
-        setCookie('user', JSON.stringify(data), 30);
+        if(data) {
+            $scope.user = data;
+            $scope.user.temp = true;
+            setCookie('user', JSON.stringify(data), 30);
+        } else {
+            setCookie('user', '', 30);
+            socket.emit('create:tempuser', {});
+        }
     });
 
     socket.on('check:user', function(data) {
-        $scope.user = data;
-        setCookie('user', JSON.stringify(data), 30);
+        if(data) {
+            $scope.user = data;
+            setCookie('user', JSON.stringify(data), 30);
+        } else {
+            setCookie('user', '', 30);
+            socket.emit('create:tempuser', {});
+        }
     });
 
     socket.on('authenticate:user', function(data) {
@@ -46,11 +57,11 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     };
 }).controller('noteCreationController', function($scope, socket) {
     socket.on('create:note', function(data) {
-        
+        alert(data.shortlink);
     });
 
     $scope.createNote = function() {
-
+        socket.emit('create:note', {userid: $scope.user.userid, title: $scope.noteTitle});
     };
 }).controller('noteController', function($scope, socket) {
 }).controller('ChatController', function($scope, socket) {
