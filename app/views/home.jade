@@ -1,0 +1,33 @@
+!!!
+html(ng-app="myApp")
+  head
+    meta(charset='utf8')
+    base(href='/')
+    title Angular Socket.io Seed App
+    link(rel='stylesheet', href='/css/normalize.css')
+    link(rel='stylesheet', href='/css/main.css')
+  body
+
+    div.layout
+        header.header
+            a.header__logo
+                img(src="img/logo.png", title="Learn Spice")
+            span.header__slogan Learn fast with us
+        form.search
+            input.search__input#search(type="text", title="Enter your course", placeholder="Enter your course",tabindex="1")
+            div.search__example
+                | Example:
+                a(href="#") Computer Science
+        div.layout__fake-footer
+    footer.footer
+        div.footer__inner
+            div.twitter
+                div.twitter__message
+                    | The class notes from Peter Thiel’s Stanford class are a must read for all entrepreneurs
+                div.twitter__date
+                    | Posted 2 Days Ago
+            aside.footer__sidebar
+                a.footer__logo
+                    img(src="img/logo.png", title="Learn Spice", alt="Learn Spice")
+                div.footer__slogan
+                    | Learn fast with us
