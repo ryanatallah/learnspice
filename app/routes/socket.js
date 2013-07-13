@@ -1,6 +1,7 @@
 var user = require('./user.js');
 var note = require('./note.js');
 var section = require('./section.js');
+var line = require('./line.js');
 var message = require('./message.js');
 
 module.exports = function(sockets, socket) {

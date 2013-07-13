@@ -21,7 +21,7 @@ div#body-container.wrapper.clearfix
 					textarea.line-field {{line.content}}
 				li.line
 					textarea.line-field.add(data-ng-model='newContent')
-					button.btn(data-ng-click='addLine({{$scope.section.sectionid}})') Add
+					button.btn(data-ng-click='addLine(section.sectionid)') Add
 		section.clearfix
 			div.section-header
 				textarea.header-field.add(data-ng-model='newHeader')
