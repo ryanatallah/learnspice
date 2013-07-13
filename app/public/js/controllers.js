@@ -4,19 +4,25 @@
 
 angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', function($scope, $cookies, socket) {
     if ($cookies.user) {
+        console.log($cookies.user);
         var user = JSON.parse($cookies.user);
         if (user.temp) {
-            socket.emit('authenticate:tempuser', {userid: user.userid, username: user.username});
+            socket.emit('check:tempuser', {userid: user.userid, username: user.username});
         } else {
-            socket.emit('authenticate:user', {userid: user.userid, username: user.username});
+            socket.emit('check:user', {userid: user.userid, username: user.username});
         }
     } else {
         socket.emit('create:tempuser', {});
     }
 
-    socket.on('authenticate:tempuser', function(data) {
+    socket.on('check:tempuser', function(data) {
         $scope.user = data;
         $scope.user.temp = true;
+        setCookie('user', JSON.stringify(data), 30);
+    });
+
+    socket.on('check:user', function(data) {
+        $scope.user = data;
         setCookie('user', JSON.stringify(data), 30);
     });
 
@@ -35,6 +41,10 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
         $scope.user = data;
         setCookie('user', JSON.stringify(data), 30);
     });
+
+    $scope.createUser = function() {
+        socket.emit('create:user', {userid: $scope.user.userid, oldUsername: $scope.user.username, username: $scope.newUsername, email: $scope.newEmail, password: $scope.newPassword});
+    };
 }).controller('MyCtrl1', function($scope, socket) {
 }).controller('MyCtrl2', function($scope, socket) {
 }).controller('ChatController', function($scope, socket) {

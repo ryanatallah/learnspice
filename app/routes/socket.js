@@ -4,9 +4,15 @@ var message = require('./message.js');
 
 module.exports = function(sockets, socket) {
 
-    socket.on('authenticate:tempuser', function(data) {
+    socket.on('check:tempuser', function(data) {
         user.validTemp(data.userid, data.username, function() {
-            socket.emit('authenticate:tempuser', data);
+            socket.emit('check:tempuser', data);
+        });
+    });
+
+    socket.on('check:user', function(data) {
+        user.valid(data.userid, data.username, function() {
+            socket.emit('check:user', data);
         });
     });
 
@@ -33,7 +39,7 @@ module.exports = function(sockets, socket) {
     });
 
     socket.on('create:user', function(data) {
-        user.validTemp(data.userid, data.username, function(){
+        user.validTemp(data.userid, data.oldUsername, function(){
             user.validUsername(data.username, function() {
                 user.create(data.username, data.email, data.password, function(results) {
                     if (results.length) {

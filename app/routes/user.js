@@ -52,6 +52,26 @@ module.exports = {
     },
 
     // WARNING: THIS IS NOT A SECURE METHOD. USERID SHOULD BE REPLACED BY SOME RANDOM CODE.
+    valid: function(userid, username, callback) {
+        MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
+            if (err) {
+                throw err;
+            }
+
+            var collection = db.collection('users');
+            collection.find({
+                _id: new ObjectId(userid),
+                username: username
+            }).toArray(function(err, results) {
+                console.dir(results);
+                if(results.length){
+                    callback();
+                }
+            });
+        });
+    },
+
+    // WARNING: THIS IS NOT A SECURE METHOD. USERID SHOULD BE REPLACED BY SOME RANDOM CODE.
     validTemp: function (userid, username, callback){
         MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
             if (err) {

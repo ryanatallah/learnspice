@@ -1,6 +1,10 @@
-h2 Hello {{user.username}}
-div(data-ng-if: 'user.temp')
+h2 Hello {{user.username}},
+div(data-ng-show='$parent.user.temp')
 	| You are using a temporary account. Please register below to save your work!
 	br
-	input(placeholder: 'Username')
-	input(placeholder: 'Password')
+	br
+	form.form-inline
+		input.input-medium(type='text', placeholder='Username', data-ng-model='$parent.newUsername')
+		input.input-medium(type='text', placeholder='Email', data-ng-model='$parent.newEmail')
+		input.input-medium(type='text', placeholder='Password', data-ng-model='$parent.newPassword')
+		button.btn.btn-primary(data-ng-click='createUser()') Register
