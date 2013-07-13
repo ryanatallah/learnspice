@@ -1,4 +1,5 @@
-hr
-form.form-inline
-	input.input-medium(type='text', placeholder='Note Title', data-ng-model='noteTitle')
-	button.btn.btn-primary(data-ng-click='createNote()') Create Note
+div#bg-wrapper
+	div.wrapper#new-note-form
+		form.form-inline#new-note-form
+			input.input-medium(type='text', placeholder='Note Title', data-ng-model='noteTitle')
+			button.btn.btn-primary(data-ng-click='createNote()') Create Note
