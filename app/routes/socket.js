@@ -86,10 +86,21 @@ module.exports = function(sockets, socket) {
 
 
     // Chat
+    socket.on('load:messages', function(data) {
+        message.getAll(data.noteid, function(results) {
+            // TODO replace 1 with actual noteid
+            if (results) {
+                socket.emit('send:messages', {
+                    messages: results
+                });
+            }
+        });
+    });
+
     socket.on('create:message', function(data) {
         message.create(data.note_id, data.user_id, data.contents, function(results) {
             if (results) {
-                socket.emit('create:message', {
+                sockets.emit('create:message', {
                     contents: results[0].contents
                 });
             }

@@ -55,6 +55,10 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     };
 }).controller('noteController', function($scope, socket) {
 }).controller('ChatController', function($scope, socket) {
+    socket.on('send:messages', function(data) {
+        $scope.messages = data[0];
+        console.log('MESSAGES SENT');
+    });
     socket.on('create:message', function(data) {
         $scope.message = data[0];
         console.log('Message posted: ' + data[0]);

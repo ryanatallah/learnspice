@@ -7,7 +7,8 @@
 		"express": "latest",
 		"jade": "latest",
 		"passport": "latest",
-		"mongodb": "latest"
+		"mongodb": "latest",
+		"ng"
 	},
 	"author": "LearnSpice Team"
 }
