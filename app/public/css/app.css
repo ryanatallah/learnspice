@@ -38,12 +38,12 @@ html {
 body {
   font-family: 'Open Sans', sans-serif;
   background: url('../img/html.png');
+  color: #FFF;
 }
 
 /* Header */
 header {
   height: 60px;
-  background-color: #006ba1;
   border-bottom: 1px solid #004364;
   clear: both;
   position: fixed;
