@@ -58,7 +58,7 @@ app.get('/chat', function(req, res) {
 });
 
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+app.get('*', routes.note);
 
 // Socket.io Communication
 io.sockets.on('connection', function(socket) {
