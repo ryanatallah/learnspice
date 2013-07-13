@@ -99,7 +99,7 @@ body {
         }
             .footer__logo {
                 display: inline-block;
-                margin-bottom: 99px;
+                margin-bottom: -13px;
             }
                 .footer__logo img { display: block; }
             .footer__slogan {
