@@ -24,4 +24,9 @@ angular.module('myApp.controllers', []).
 }).
         controller('MyCtrl2', function($scope) {
     // write Ctrl here
+}).controller('ChatController', function($scope, socket) {
+    socket.on('create:message', function(data) {
+        $scope.message = data[0];
+        console.log('Message posted: ' + data[0]);
+    });
 });

@@ -1,5 +1,6 @@
 var user = require('./user.js');
 var note = require('./note.js');
+var message = require('./message.js');
 
 module.exports = function(socket) {
 
@@ -42,10 +43,10 @@ module.exports = function(socket) {
 
     // Chat
     socket.on('create:message', function(data) {
-        message.create(data.note_id, data.user_id, data.contents function(results) {
+        message.create(data.note_id, data.user_id, data.contents, function(results) {
             if (results) {
                 socket.emit('create:message', {
-                    results[0].contents
+                    contents: results[0].contents
                 });
             }
         });
