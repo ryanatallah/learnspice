@@ -157,8 +157,16 @@ module.exports = function(sockets, socket) {
 
     // Line Stuff
 
+    socket.on('get:lines', function(data) {
+        line.getAll(data.noteid, function(results) {
+            socket.emit('get:lines', results);
+        });
+    });
+
     socket.on('create:line', function(data) {
-        // TODO
+        line.create(data.noteid, data.sectionid, data.userid, data.content, function(results) {
+            sockets.in(data.shortlink).emit('create:line', results[0]);
+        });
     });
 
 

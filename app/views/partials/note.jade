@@ -13,37 +13,15 @@ div#body-container.wrapper.clearfix
 		div#video-container
 		div#slides-container
 	div#right-column
-		section.clearfix
+		section.clearfix(data-ng-repeat='section in sections')
 			div.section-header
-				textarea.header-field Lorem ipsum dolor sit amet
+				textarea.header-field {{section.header}}
 			ul.line-container
+				li.line(data-ng-repeat='line in lines | filter:filterItems')
+					textarea.line-field {{line.content}}
 				li.line
-					textarea.line-field(onkeypress="updateFieldSizes()") thing sdsdf sdfsdfs sdf sdf sd sd sdf sdfsdfsdfsd
-				li.line 
-					textarea.line-field(onkeypress="updateFieldSizes()") Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor.
-				li.line 
-					textarea.line-field(onkeypress="updateFieldSizes()") Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.
-				li.line 
-					textarea.line-field(onkeypress="updateFieldSizes()") Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum.
-				li.line
-					textarea.line-field.add(onkeypress="updateFieldSizes()") Add...
+					textarea.line-field.add(data-ng-model='newContent', data-ng-change='addLine()') Add...
 		section.clearfix
 			div.section-header
-				textarea.header-field Mauris iaculis porttitor posuere
-			ul.line-container
-				li.line 
-					textarea.line-field Praesent id metus massat
-				li.line 
-					textarea.line-field Vivamus hendrerit arcu sed erat molestie vehicula.
-				li.line 
-					textarea.line-field Phasellus molestie
-				li.line 
-					textarea.line-field Suspendisse dictum
-				li.line 
-					textarea.line-field.add Add...
-			ul.line-container
-		section.clearfix
-			div.section-header
-				textarea.header-field.add Add...
-			ul.line-container
+				textarea.header-field.add(data-ng-model='newHeader', data-ng-change='addSection()') Add...
 
