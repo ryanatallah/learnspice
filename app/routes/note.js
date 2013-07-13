@@ -60,7 +60,7 @@ module.exports = {
                 throw err;
             }
 
-            db.collection('notes').update({_id: new ObjectId(noteid)}, {$set: {title: title}, function(err, results) {
+            db.collection('notes').update({_id: new ObjectId(noteid)}, {$set: {title: title}}, function(err, results) {
                 console.dir(results);
                 db.close();
                 callback(results);

@@ -161,11 +161,11 @@ module.exports = {
             if (err) {
                 throw err;
             }
-            db.collection('notes').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
-            db.collection('sections').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
-            db.collection('lines').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
-            db.collection('attachments').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
-            db.collection('messages').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('notes').update({userid: userid_from}, {$set: {userid: userid_to}}, function(err, docs) {});
+            db.collection('sections').update({userid: userid_from}, {$set: {userid: userid_to}}, function(err, docs) {});
+            db.collection('lines').update({userid: userid_from}, {$set: {userid: userid_to}}, function(err, docs) {});
+            db.collection('attachments').update({userid: userid_from}, {$set: {userid: userid_to}}, function(err, docs) {});
+            db.collection('messages').update({userid: userid_from}, {$set: {userid: userid_to}}, function(err, docs) {});
             db.collection('users').remove({userid: userid_from}, function(err, docs) {});
             callback();
         });
