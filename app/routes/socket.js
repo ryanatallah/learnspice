@@ -38,4 +38,16 @@ module.exports = function(socket) {
     socket.on('create:line', function(data) {
 
     });
+
+
+    // Chat
+    socket.on('create:message', function(data) {
+        message.create(data.note_id, data.user_id, data.contents function(results) {
+            if (results) {
+                socket.emit('create:message', {
+                    results[0].contents
+                });
+            }
+        });
+    });
 };
