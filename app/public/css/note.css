@@ -122,6 +122,7 @@ textarea {
 	outline: none;
 	display: block;
 	margin: 0;
+	height: 16px;
 	font-family: 'Open Sans', sans-serif;
 	-webkit-transition: all 100ms linear;
     -moz-transition:    all 100ms linear;
@@ -143,7 +144,6 @@ textarea:focus {
 	font-weight: 600;
 	text-align: right;
 	border-left: 2px solid #f5f5f5;
-	padding: 20px 22px 20px 18px;
 }
 
 .section-header .header-field:focus {
