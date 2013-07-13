@@ -37,6 +37,11 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     });
 }).controller('MyCtrl1', function($scope, socket) {
 }).controller('MyCtrl2', function($scope, socket) {
+}).controller('ChatController', function($scope, socket) {
+    socket.on('create:message', function(data) {
+        $scope.message = data[0];
+        console.log('Message posted: ' + data[0]);
+    });
 });
 
 function setCookie(c_name, value, exdays) {
