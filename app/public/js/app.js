@@ -19,6 +19,10 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/partial2',
       controller: 'noteController'
     }).
+    when('/note/:id', {
+      templateUrl: 'partials/note',
+      controller: 'NoteController'
+    }).
     otherwise({
       redirectTo: '/'
     });

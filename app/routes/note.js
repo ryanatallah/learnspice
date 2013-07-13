@@ -9,6 +9,7 @@ module.exports = {
                 throw err;
             }
 
+
             var collection = db.collection('notes');
             collection.find({
                 _id: new ObjectId(noteid),

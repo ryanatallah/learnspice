@@ -9,7 +9,6 @@ module.exports = {
                 throw err;
             }
 
-            var db 
             db.collection('messages').find({"note_id" : note_id}).toArray(function(err, docs) {
                 console.log(docs);
                 callback(docs);
