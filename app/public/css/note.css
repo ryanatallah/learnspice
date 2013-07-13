@@ -119,21 +119,33 @@ section + section {
 	background-color: #fff;
 }
 
-.line-container li {
-	padding: 20px 20px 20px 18px;
-	border-left: 2px solid #fff;
-
+.line-container li textarea {
 	-webkit-transition: all 100ms linear;
     -moz-transition:    all 100ms linear;
     -o-transition:      all 100ms linear;
     -ms-transition:     all 100ms linear;
     transition:         all 100ms linear;
+	border-left: 2px solid #fff;
+	width: 335px;
+	display: block;
+	outline: none;
+	margin:0; padding:0; border:none; display:block;
+	font-family: 'Open Sans', sans-serif;
+	padding: 20px 20px 20px 18px;
+	resize: none;
+	margin: 0;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
 }
 
-.line-container li:hover, .line-container li.add, .section-header.add {
-	background: #f5f5f5;
+.line-container li textarea:focus {
 	border-left: 2px solid #0088cc;
-	padding-left: 18px;
+	background: #f5f5f5;
+}
+
+.line-container li:hover textarea, .line-container li.add, .section-header.add {
+
 }
 
 .section-header.add {
