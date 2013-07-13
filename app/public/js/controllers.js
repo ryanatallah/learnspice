@@ -65,11 +65,31 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
 }).controller('noteController', function($scope, $routeParams, $location, socket) {
     var shortlink = $routeParams.shortlink;
 
+    $scope.sections = [];
+
     socket.emit('get:note', {shortlink: shortlink});
 
     socket.on('get:note', function(data) {
         if (data) {
             $scope.note = data;
+
+            socket.emit('get:sections', {noteid: $scope.note.noteid});
+
+            socket.on('get:sections', function(data) {
+                $scope.sections = data;
+            });
+
+            socket.on('create:section', function(data){
+                $scope.sections.push(data);
+            });
+
+            socket.on('change:section', function(data){
+                // TODO: remove previous section in list and push new section to the top
+            });
+
+            $scope.addSection = function() {
+                socket.emit('create:section', {shortlink: shortlink, noteid: $scope.note.noteid, userid: $scope.user.userid, header: $scope.newHeader});
+            };
         } else {
             $location.path('/');
         }

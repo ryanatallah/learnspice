@@ -1,5 +1,6 @@
 var user = require('./user.js');
 var note = require('./note.js');
+var section = require('./section.js');
 var message = require('./message.js');
 
 module.exports = function(sockets, socket) {
@@ -90,6 +91,7 @@ module.exports = function(sockets, socket) {
     socket.on('get:note', function(data) {
         note.get(data.shortlink, function(results) {
             if (results) {
+                socket.join(data.shortlink);
                 socket.emit('get:note', {
                     noteid: results[0]._id,
                     title: results[0].title,
@@ -104,7 +106,7 @@ module.exports = function(sockets, socket) {
     socket.on('create:note', function(data) {
         note.create(data.title, data.userid, function(results) {
             if (results.length) {
-                sockets.emit('create:note', {
+                socket.emit('create:note', {
                     noteid: results[0]._id,
                     title: results[0].title,
                     shortlink: results[0].shortlink
@@ -116,7 +118,7 @@ module.exports = function(sockets, socket) {
     socket.on('change:notetitle', function(data) {
         note.validOwner(data.noteid, data.userid, function(results) {
             note.changeTitle(data.noteid, data.title, function(results) {
-                sockets.emit('change:notetitle', {
+                sockets.in(results[0].shortlink).emit('change:notetitle', {
                     noteid: results[0]._id,
                     title: results[0].title,
                     shortlink: results[0].shortlink
@@ -128,7 +130,7 @@ module.exports = function(sockets, socket) {
     socket.on('delete:note', function(data) {
         note.validOwner(data.noteid, data.userid, function(results) {
             note.delete(data.noteid, function() {
-                sockets.emit('delete:note', {
+                sockets.in(results[0].shortlink).emit('delete:note', {
                     noteid: results[0]._id
                 });
             });
@@ -139,8 +141,16 @@ module.exports = function(sockets, socket) {
 
     // Section Stuff
 
+    socket.on('get:sections', function(data) {
+        section.getAll(data.noteid, function(results) {
+            socket.emit('get:sections', results);
+        });
+    });
+
     socket.on('create:section', function(data) {
-        // TODO
+        section.create(data.noteid, data.userid, data.header, function(results) {
+            sockets.in(data.shortlink).emit('create:section', results[0]);
+        });
     });
 
 
