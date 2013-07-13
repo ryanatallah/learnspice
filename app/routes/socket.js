@@ -2,7 +2,7 @@ var user = require('./user.js');
 var note = require('./note.js');
 var message = require('./message.js');
 
-module.exports = function(socket) {
+module.exports = function(sockets, socket) {
 
     socket.on('authenticate:tempuser', function(data) {
         user.validTemp(data.userid, data.username, function() {
