@@ -37,6 +37,10 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: #d6d6d6;
+}
+
+body.front_page {
   background: url('../img/html.png');
 }
 
@@ -50,6 +54,11 @@ header {
   top: 0;
   width: 100%;
   z-index: 10;
+}
+
+#logo {
+  height: 40px;
+  margin-top: 10px;
 }
 
 .wrapper {
