@@ -28,3 +28,47 @@
   content: "";
   padding: 0;
 }
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Header */
+header {
+  height: 60px;
+  background-color: #006ba1;
+  border-bottom: 1px solid #004364;
+  clear: both;
+}
+
+.wrapper {
+  width: 960px;
+  margin: 0 auto;
+}
+
+h1 {
+  float: left;
+  font-weight: 700;
+  color: white;
+  font-size: 24px;
+  line-height: 30px;
+  padding: 15px 0;
+  margin: 0;
+}
+
+h2 {
+  float: right;
+  font-weight: 400;
+  line-height: 30px;
+  font-size: 18px;
+  padding: 15px 0;
+  margin: 0;
+  color: #7ca5c3;
+}
+
+h2 span {
+  background-color: #3389b4;
+  color: white;
+  padding: 4px 8px;
+}

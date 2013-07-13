@@ -1,0 +1,93 @@
+/* Note header styles*/
+
+#note-header {
+	background-color: #f5f5f5;
+	height: 80px;
+	clear: both;
+}
+
+h3 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	color: #555;
+	line-height: 34px;
+}
+
+#note-left {
+	float: left;
+	height: 74px;
+	padding: 10px 0 0 60px;
+	background-image: url('/img/note-icon.png');
+	background-size: 40px 47px;
+	background-repeat: no-repeat;
+	background-position: 0 14px;
+}
+
+#note-left p {
+	color: #777;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+}
+
+#note-link-box {
+	float: right;
+	height: 40px;
+	padding: 30px 0;
+}
+
+#note-link-box #link {
+	background: #e0e0e0;
+	font-size: 14px;
+	line-height: 14px;
+	padding: 8px 12px;
+}
+
+#note-link-box #share-button {
+	background-color: #3389b4;
+	background-image: url('/img/share-icon.png');
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 10px 7px;
+	width: 40px;
+	height: 40px;
+	padding: 8px 18px 8px;
+}
+
+/* General */
+
+#body-container {
+	clear: both;
+}
+
+/* Left col styles */
+
+#left-column {
+	background: #ddd;
+	/*float: left;*/
+	height: 500px;
+	width: 372px; /* (960 * 2/5) - 10 - 2 */
+}
+
+#video-container {
+	height: 250px;
+	width: 372px;
+	background: #bbb;
+	margin: 0;
+}
+
+#slides-container {
+	height: 250px;
+	width: 372px;
+	background: #bbb;
+	margin: 20px 0 0;
+}
+
+/* Right col styles */
+
+#right-column {
+	width: 564px; /* (960 * 3/5) - 10 - 2 */
+	float: left;
+}
+

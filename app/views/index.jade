@@ -2,8 +2,11 @@ extends layout
 
 block body
   div(ng-controller='AppCtrl')
-    h2 Hello {{user.username}},
-    div(data-ng-show='user.temp')
+    header
+      div.wrapper
+        h1 LearnSpice
+        h2 Hello, <span>{{user.username}}</span>
+    div(data-ng-show='$parent.user.temp')
       | You are using a temporary account. Please register below to save your work!
       br
       br

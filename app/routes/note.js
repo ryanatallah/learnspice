@@ -2,10 +2,6 @@ var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var crypto = require('crypto');
 
-exports.note = function(req, res){
-  res.render('note');
-};
-
 module.exports = {
     validOwner: function(noteid, userid, callback) {
         MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {

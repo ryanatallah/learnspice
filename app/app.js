@@ -47,10 +47,12 @@ if (app.get('env') === 'production') {
 
 // serve index and view partials
 app.get('/', routes.index);
+// app.get('/note', routes.index);
 app.get('/partials/:name', routes.partials);
 
 // JSON API
 app.get('/api/name', api.name);
+app.get('/api/note/:shortlink', api.note);
 
 // Chat
 app.get('/chat', function(req, res) {
@@ -58,7 +60,7 @@ app.get('/chat', function(req, res) {
 });
 
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.note);
+app.get('*', routes.index);
 
 // Socket.io Communication
 io.sockets.on('connection', function(socket) {

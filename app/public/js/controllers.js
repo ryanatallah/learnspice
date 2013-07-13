@@ -64,6 +64,10 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
         socket.emit('create:note', {userid: $scope.user.userid, title: $scope.noteTitle});
     };
 }).controller('noteController', function($scope, socket) {
+    $http.get('/api/note/' + $routeParams.id).
+        success(function(data) {
+            $scope.note = data.note;
+        });
 }).controller('ChatController', function($scope, socket) {
     socket.on('send:messages', function(data) {
         $scope.messages = data[0];
