@@ -40,15 +40,27 @@ module.exports = function(sockets, socket) {
 
     socket.on('create:user', function(data) {
         user.validTemp(data.userid, data.oldUsername, function(){
-            user.validUsername(data.username, function() {
-                user.create(data.username, data.email, data.password, function(results) {
-                    if (results.length) {
-                        socket.emit('create:user', {
-                            userid: results[0]._id,
-                            username: results[0].username
-                        });
-                    }
-                });
+            user.validUsername(data.username, function(result) {
+                if(result) {
+                    user.create(data.username, data.email, data.password, function(results) {
+                        if (results.length) {
+                            socket.emit('create:user', {
+                                userid: results[0]._id,
+                                username: results[0].username
+                            });
+                        }
+                    });
+                } else {
+                    user.authenticate(data.username, data.password, function(results) {
+                        if (results.length) {
+                            user.transfer(data.userid, results[0]._id);
+                            socket.emit('authenticate:user', {
+                                userid: results[0]._id,
+                                username: results[0].username
+                            });
+                        }
+                    });
+                }
             });
         });
     });

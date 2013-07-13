@@ -45,8 +45,15 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     $scope.createUser = function() {
         socket.emit('create:user', {userid: $scope.user.userid, oldUsername: $scope.user.username, username: $scope.newUsername, email: $scope.newEmail, password: $scope.newPassword});
     };
-}).controller('MyCtrl1', function($scope, socket) {
-}).controller('MyCtrl2', function($scope, socket) {
+}).controller('noteCreationController', function($scope, socket) {
+    socket.on('create:note', function(data) {
+        
+    });
+
+    $scope.createNote = function() {
+
+    };
+}).controller('noteController', function($scope, socket) {
 }).controller('ChatController', function($scope, socket) {
     socket.on('create:message', function(data) {
         $scope.message = data[0];

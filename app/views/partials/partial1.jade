@@ -1,10 +1,4 @@
-h2 Hello {{user.username}},
-div(data-ng-show='$parent.user.temp')
-	| You are using a temporary account. Please register below to save your work!
-	br
-	br
-	form.form-inline
-		input.input-medium(type='text', placeholder='Username', data-ng-model='$parent.newUsername')
-		input.input-medium(type='text', placeholder='Email', data-ng-model='$parent.newEmail')
-		input.input-medium(type='text', placeholder='Password', data-ng-model='$parent.newPassword')
-		button.btn.btn-primary(data-ng-click='createUser()') Register
+hr
+form.form-inline
+	input.input-medium(type='text', placeholder='Note Title', data-ng-model='noteTitle')
+	button.btn.btn-primary(data-ng-click='createNote()') Create Note

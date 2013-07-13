@@ -13,11 +13,11 @@ config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
       templateUrl: 'partials/partial1',
-      controller: 'MyCtrl1'
+      controller: 'noteCreationController'
     }).
     when('/note', {
       templateUrl: 'partials/partial2',
-      controller: 'MyCtrl2'
+      controller: 'noteController'
     }).
     otherwise({
       redirectTo: '/'

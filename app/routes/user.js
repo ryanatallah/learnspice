@@ -151,5 +151,32 @@ module.exports = {
                 callback(docs);
             });
         });
+    },
+    // TODO: MAKE SURE ALL STUFF ASSOCIATED WITH userid_from IS TRANSFERED TO userid_to.
+    transfer: function(userid_from, userid_to, callback) {
+        MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
+            if (err) {
+                throw err;
+            }
+            db.collection('notes').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
+                db.close();
+            });
+            db.collection('sections').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
+                db.close();
+            });
+            db.collection('lines').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
+                db.close();
+            });
+            db.collection('attachments').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
+                db.close();
+            });
+            db.collection('messages').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
+                db.close();
+            });
+            db.collection('users').remove({userid: userid_from}, function(err, docs) {
+                db.close();
+            });
+            callback();
+        });
     }
 };
