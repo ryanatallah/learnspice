@@ -3,7 +3,7 @@ extends layout
 block body
   div(ng-controller='AppCtrl')
     h2 Hello {{user.username}},
-    div(data-ng-show='$parent.user.temp')
+    div(data-ng-show='user.temp')
       | You are using a temporary account. Please register below to save your work!
       br
       br
