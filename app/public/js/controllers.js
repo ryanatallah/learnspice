@@ -56,17 +56,24 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     };
 }).controller('noteCreationController', function($scope, socket) {
     socket.on('create:note', function(data) {
-        alert(data.shortlink);
+        // TODO: redirect to shortlink
     });
 
     $scope.createNote = function() {
         socket.emit('create:note', {userid: $scope.user.userid, title: $scope.noteTitle});
     };
-}).controller('noteController', function($scope, socket) {
-    $http.get('/api/note/' + $routeParams.id).
-        success(function(data) {
-            $scope.note = data.note;
-        });
+}).controller('noteController', function($scope, $routeParams, socket) {
+    var shortlink = $routeParams.shortlink;
+
+    socket.emit('get:note', {shortlink: shortlink});
+
+    socket.on('get:note', function(data) {
+        if (data) {
+            $scope.note = data;
+        } else {
+            // TODO: redirect to shortlink
+        }
+    });
 }).controller('ChatController', function($scope, socket) {
     socket.on('send:messages', function(data) {
         $scope.messages = data[0];

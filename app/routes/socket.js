@@ -87,6 +87,20 @@ module.exports = function(sockets, socket) {
 
     // Note Stuff
 
+    socket.on('get:note', function(data) {
+        note.get(data.shortlink, function(results) {
+            if (results) {
+                socket.emit('get:note', {
+                    noteid: results[0]._id,
+                    title: results[0].title,
+                    shortlink: results[0].shortlink
+                });
+            } else {
+                socket.emit('get:note', results);
+            }
+        });
+    });
+
     socket.on('create:note', function(data) {
         note.create(data.title, data.userid, function(results) {
             if (results.length) {

@@ -15,13 +15,9 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/partial1',
       controller: 'noteCreationController'
     }).
-    when('/note', {
-      templateUrl: 'partials/partial2',
-      controller: 'noteController'
-    }).
-    when('/note/:id', {
+    when('/:shortlink', {
       templateUrl: 'partials/note',
-      controller: 'NoteController'
+      controller: 'noteController'
     }).
     otherwise({
       redirectTo: '/'

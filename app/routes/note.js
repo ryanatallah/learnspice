@@ -14,12 +14,29 @@ module.exports = {
             collection.find({
                 _id: new ObjectId(noteid),
                 userid: userid
-            },
-            function(err, results) {
+            }.toArray(function(err, results) {
                 console.dir(results);
                 db.close();
                 if(results.length) {
                     callback();
+                }
+            });
+        });
+    },
+    get: function(shortlink, callback) {
+        MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
+            if (err) {
+                throw err;
+            }
+
+            var collection = db.collection('notes');
+            collection.find({'shortlink': shortlink}).toArray(function (err, results) {
+                console.dir(results);
+                db.close();
+                if(results.length) {
+                    callback(results);
+                } else {
+                    callback(undefined);
                 }
             });
         });
