@@ -77,6 +77,31 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
 
             socket.on('get:sections', function(data) {
                 $scope.sections = data;
+
+                socket.on('get:lines', function(data) {
+                    $scope.lines = data;
+                });
+
+                socket.on('create:line', function(data){
+                    $scope.lines.push(data);
+                });
+
+                socket.on('change:section', function(data){
+                    for (var i = 0; i < $scope.lines.length; i++) {
+                        if ($scope.lines[i]._id == data._id) {
+                            $scope.lines[i] = data._id;
+                            break;
+                        }
+                    }
+                });
+
+                $scope.addLine = function() {
+                    socket.emit('create:line', {shortlink: shortlink, noteid: $scope.note.noteid, sectionid: $scope.section, userid: $scope.user.userid, content: $scope.newContent});
+                };
+
+                $scope.filterItems = function(line) {
+                    return line.noteid == $scope.section;
+                }
             });
 
             socket.on('create:section', function(data){
@@ -84,7 +109,12 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
             });
 
             socket.on('change:section', function(data){
-                // TODO: remove previous section in list and push new section to the top
+                for (var i = 0; i < $scope.sections.length; i++) {
+                    if ($scope.sections[i]._id == data._id) {
+                        $scope.sections[i] = data._id;
+                        break;
+                    }
+                }
             });
 
             $scope.addSection = function() {
