@@ -44,8 +44,10 @@ module.exports = {
             var collection = db.collection('users');
             collection.find({username: username}).toArray(function(err, results) {
                 console.dir(results);
-                if(!results.length){
-                    callback();
+                if(!results.length) {
+                    callback(true);
+                } else {
+                    callback(false);
                 }
             });
         });
@@ -152,30 +154,19 @@ module.exports = {
             });
         });
     },
+    
     // TODO: MAKE SURE ALL STUFF ASSOCIATED WITH userid_from IS TRANSFERED TO userid_to.
     transfer: function(userid_from, userid_to, callback) {
         MongoClient.connect('mongodb://127.0.0.1:27017/learnspice', function(err, db) {
             if (err) {
                 throw err;
             }
-            db.collection('notes').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
-                db.close();
-            });
-            db.collection('sections').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
-                db.close();
-            });
-            db.collection('lines').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
-                db.close();
-            });
-            db.collection('attachments').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
-                db.close();
-            });
-            db.collection('messages').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {
-                db.close();
-            });
-            db.collection('users').remove({userid: userid_from}, function(err, docs) {
-                db.close();
-            });
+            db.collection('notes').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('sections').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('lines').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('attachments').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('messages').update({userid: userid_from}, {$set: {userid: userid_to}, function(err, docs) {});
+            db.collection('users').remove({userid: userid_from}, function(err, docs) {});
             callback();
         });
     }

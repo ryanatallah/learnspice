@@ -4,7 +4,6 @@
 
 angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', function($scope, $cookies, socket) {
     if ($cookies.user) {
-        console.log($cookies.user);
         var user = JSON.parse($cookies.user);
         if (user.temp) {
             socket.emit('check:tempuser', {userid: user.userid, username: user.username});

@@ -4,6 +4,8 @@ var message = require('./message.js');
 
 module.exports = function(sockets, socket) {
 
+    // User Stuff
+
     socket.on('check:tempuser', function(data) {
         user.validTemp(data.userid, data.username, function() {
             socket.emit('check:tempuser', data);
@@ -65,27 +67,66 @@ module.exports = function(sockets, socket) {
         });
     });
 
+
+
+    // Note Stuff
+
     socket.on('create:note', function(data) {
         note.create(data.title, data.userid, function(results) {
             if (results.length) {
-                socket.emit('create:note', {
+                sockets.emit('create:note', {
+                    noteid: results[0]._id,
                     title: results[0].title,
+                    hash: results[0].hash,
                     shortlink: results[0].shortlink
                 });
             }
         });
     });
 
+    socket.on('change:notetitle', function(data) {
+        note.validOwner(data.noteid, data.userid, function(results) {
+            note.changeTitle(data.noteid, data.title, function(results) {
+                sockets.emit('change:notetitle', {
+                    noteid: results[0]._id,
+                    title: results[0].title,
+                    hash: results[0].hash,
+                    shortlink: results[0].shortlink
+                });
+            });
+        });
+    });
+
+    socket.on('delete:note', function(data) {
+        note.validOwner(data.noteid, data.userid, function(results) {
+            note.delete(data.noteid, function() {
+                sockets.emit('delete:note', {
+                    noteid: results[0]._id
+                });
+            });
+        });
+    });
+
+
+
+    // Section Stuff
+
     socket.on('create:section', function(data) {
         // TODO
     });
+
+
+
+    // Line Stuff
 
     socket.on('create:line', function(data) {
         // TODO
     });
 
 
-    // Chat
+
+    // Chat Stuff
+
     socket.on('create:message', function(data) {
         message.create(data.note_id, data.user_id, data.contents, function(results) {
             if (results) {
