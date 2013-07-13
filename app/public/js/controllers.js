@@ -77,31 +77,6 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
 
             socket.on('get:sections', function(data) {
                 $scope.sections = data;
-
-                socket.on('get:lines', function(data) {
-                    $scope.lines = data;
-                });
-
-                socket.on('create:line', function(data){
-                    $scope.lines.push(data);
-                });
-
-                socket.on('change:section', function(data){
-                    for (var i = 0; i < $scope.lines.length; i++) {
-                        if ($scope.lines[i]._id == data._id) {
-                            $scope.lines[i] = data._id;
-                            break;
-                        }
-                    }
-                });
-
-                $scope.addLine = function() {
-                    socket.emit('create:line', {shortlink: shortlink, noteid: $scope.note.noteid, sectionid: $scope.section, userid: $scope.user.userid, content: $scope.newContent});
-                };
-
-                $scope.filterItems = function(line) {
-                    return line.noteid == $scope.section;
-                }
             });
 
             socket.on('create:section', function(data){
@@ -117,8 +92,32 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
                 }
             });
 
+            socket.on('get:lines', function(data) {
+                $scope.lines = data;
+            });
+
+            socket.on('create:line', function(data){
+                $scope.lines.push(data);
+            });
+
+            socket.on('change:section', function(data){
+                for (var i = 0; i < $scope.lines.length; i++) {
+                    if ($scope.lines[i]._id == data._id) {
+                        $scope.lines[i] = data._id;
+                        break;
+                    }
+                }
+            });
+
+            $scope.addLine = function(section) {
+                console.log(section);
+                socket.emit('create:line', {shortlink: shortlink, noteid: $scope.note.noteid, sectionid: section, userid: $scope.user.userid, content: $scope.newContent});
+                $scope.newContent = '';
+            };
+
             $scope.addSection = function() {
                 socket.emit('create:section', {shortlink: shortlink, noteid: $scope.note.noteid, userid: $scope.user.userid, header: $scope.newHeader});
+                $scope.newHeader = '';
             };
         } else {
             $location.path('/');

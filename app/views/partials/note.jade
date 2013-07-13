@@ -17,11 +17,13 @@ div#body-container.wrapper.clearfix
 			div.section-header
 				textarea.header-field {{section.header}}
 			ul.line-container
-				li.line(data-ng-repeat='line in lines | filter:filterItems')
+				li.line(data-ng-repeat='line in lines')
 					textarea.line-field {{line.content}}
 				li.line
-					textarea.line-field.add(data-ng-model='newContent', data-ng-change='addLine()') Add...
+					textarea.line-field.add(data-ng-model='newContent')
+					button.btn(data-ng-click='addLine({{$scope.section.sectionid}})') Add
 		section.clearfix
 			div.section-header
-				textarea.header-field.add(data-ng-model='newHeader', data-ng-change='addSection()') Add...
+				textarea.header-field.add(data-ng-model='newHeader')
+				button.btn(data-ng-click='addSection()') Add
 
