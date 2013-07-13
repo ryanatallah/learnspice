@@ -54,15 +54,15 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
     $scope.createUser = function() {
         socket.emit('create:user', {userid: $scope.user.userid, oldUsername: $scope.user.username, username: $scope.newUsername, email: $scope.newEmail, password: $scope.newPassword});
     };
-}).controller('noteCreationController', function($scope, socket) {
+}).controller('noteCreationController', function($scope, $location, socket) {
     socket.on('create:note', function(data) {
-        // TODO: redirect to shortlink
+        $location.path('/' + data.shortlink);
     });
 
     $scope.createNote = function() {
         socket.emit('create:note', {userid: $scope.user.userid, title: $scope.noteTitle});
     };
-}).controller('noteController', function($scope, $routeParams, socket) {
+}).controller('noteController', function($scope, $routeParams, $location, socket) {
     var shortlink = $routeParams.shortlink;
 
     socket.emit('get:note', {shortlink: shortlink});
@@ -71,7 +71,7 @@ angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', functio
         if (data) {
             $scope.note = data;
         } else {
-            // TODO: redirect to shortlink
+            $location.path('/');
         }
     });
 }).controller('ChatController', function($scope, socket) {

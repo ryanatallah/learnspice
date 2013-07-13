@@ -14,7 +14,7 @@ module.exports = {
             collection.find({
                 _id: new ObjectId(noteid),
                 userid: userid
-            }.toArray(function(err, results) {
+            }).toArray(function(err, results) {
                 console.dir(results);
                 db.close();
                 if(results.length) {
