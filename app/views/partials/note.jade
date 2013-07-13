@@ -1,5 +1,5 @@
 block body
-	div#note-header
+	div#note-header.clearfix
 		div.wrapper
 			div#note-left
 				h3#note-title {{note.title}}
@@ -8,19 +8,19 @@ block body
 				a#link learnspice.com/4TgV
 					a#share-button
 
-	div#body-container.wrapper
+	div#body-container.wrapper.clearfix
 		div#left-coluimn
 			div#video-container
 			div#slides-container
 		div#right-column
-			section
+			section.clearfix
 				div.section-header Lorem ipsum dolor sit amet
 				ul.line-container
 					li.line Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor.
 					li.line Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.
 					li.line Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum.
 					li.line.add
-			section
+			section.clearfix
 				div.section-header Mauris iaculis porttitor posuere
 				ul.line-container
 					li.line Praesent id metus massat
@@ -29,7 +29,7 @@ block body
 					li.line Suspendisse dictum
 					li.line.add
 				ul.line-container
-			section
+			section.clearfix
 				div.section-header.add
 				ul.line-container
 					li.line.add

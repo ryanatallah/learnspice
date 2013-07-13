@@ -1,3 +1,4 @@
+
 /* app css stylesheet */
 
 .menu {
@@ -30,8 +31,13 @@
 }
 
 
+html {
+  background-color: #d6d6d6;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
+  background-color: #d6d6d6;
 }
 
 /* Header */
