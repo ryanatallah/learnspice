@@ -1,33 +1,21 @@
-!!!
-html(ng-app="myApp")
-  head
-    meta(charset='utf8')
-    base(href='/')
-    title Angular Socket.io Seed App
-    link(rel='stylesheet', href='/css/normalize.css')
-    link(rel='stylesheet', href='/css/main.css')
-    link(rel='stylesheet', href='/css/note.css')
-    link(rel='stylesheet', href='/css/helper.css')
-    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700')
-  body
-    div.layout(ng-controller='AppCtrl')
-        header.header
-            div.header__left
-                a.header__logo
-                    img(src="img/logo.png", title="Learn Spice")
-                span.header__slogan Learn fast with us
-            div.header__right
-                span.header__username Hello, <span>{{user.username}}</span>
-        div(data-ng-show='$parent.user.temp')
-          | You are using a temporary account. Please register below to save your work!
-          br
-          br
-          form.form-inline
-            input.input-medium(type='text', placeholder='Username', data-ng-model='$parent.newUsername')
-            input.input-medium(type='text', placeholder='Email', data-ng-model='$parent.newEmail')
-            input.input-medium(type='text', placeholder='Password', data-ng-model='$parent.newPassword')
-            button.btn.btn-primary(data-ng-click='createUser()') Register
-        div(ng-view)
+extends layout
+
+block body
+  div(ng-controller='AppCtrl')
+    header.clearfix
+      div.wrapper
+        h1 LearnSpice
+        h2 Hello, <span>{{user.username}}</span>
+    div(data-ng-show='$parent.user.temp')
+      | You are using a temporary account. Please register below to save your work!
+      br
+      br
+      form.form-inline
+        input.input-medium(type='text', placeholder='Username', data-ng-model='$parent.newUsername')
+        input.input-medium(type='text', placeholder='Email', data-ng-model='$parent.newEmail')
+        input.input-medium(type='text', placeholder='Password', data-ng-model='$parent.newPassword')
+        button.btn.btn-primary(data-ng-click='createUser()') Register
+    div(ng-view)
 
   script(src='/socket.io/socket.io.js')
   script(src='bower_components/angular/angular.min.js')
