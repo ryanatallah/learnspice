@@ -33,7 +33,10 @@ module.exports = {
             md5.update(new Date().toJSON(), 'utf8');
             var hash = md5.digest('base64');
 
-            var shortlink = ''; // TODO: shortlink generation
+            var md5 = crypto.createHash("md5");
+            md5.update(new Date().toJSON() + 'shortlink', 'utf8');
+            var shortlink = md5.digest('base64');
+
             var collaborators = [userid];
             var date_created = new Date();
 
