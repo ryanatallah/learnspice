@@ -8,8 +8,8 @@ angular.module('myApp.controllers', []).
         $scope.name = data.name;
     });
 }).
-        controller('MyCtrl1', function($scope, socket) {
-    //socket.emit('create:user', {username: 'tester', email: 'tester@tester.com', password: 'tester'});
+    controller('MyCtrl1', function($scope, socket) {
+    socket.emit('create:user', {username: 'tester', email: 'tester@tester.com', password: 'tester'});
     socket.emit('authenticate:user', {username: 'tester', password: 'tester'});
 
     socket.on('authenticate:user', function(data) {
