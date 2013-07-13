@@ -35,14 +35,25 @@ window.onload = function() {
             }
             console.log(data.contents);
             content.innerHTML = html;
+            content.scrollTop = content.scrollHeight;
         } else {
             console.log("There is a problem:", data);
         }
     });
+
+    $(document).ready(function() {                                               
+        $("#field").keyup(function(e) {                                          
+            if(e.keyCode == 13) {                                                
+                sendMessage();                                                   
+            }                                                                    
+        });                                                                      
+    });            
  
-    sendButton.onclick = function() {
+    sendButton.onclick = sendMessage = function() {
         var text = field.value;
+        field.value ="";
         console.log('message sent: ' + text);
         socket.emit('create:message', { note_id: 1, user_id: 1, contents: text });
     }; 
+
 }
