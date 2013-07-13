@@ -7,22 +7,20 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-
-  // 3rd party dependencies
   'btford.socket-io'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
-    when('/view1', {
+    when('/', {
       templateUrl: 'partials/partial1',
       controller: 'MyCtrl1'
     }).
-    when('/view2', {
+    when('/note', {
       templateUrl: 'partials/partial2',
       controller: 'MyCtrl2'
     }).
     otherwise({
-      redirectTo: '/view1'
+      redirectTo: '/'
     });
 
   $locationProvider.html5Mode(true);

@@ -1,1 +1,6 @@
-h2 Hello {{user.username}} ({{user.userid}})
+h2 Hello {{user.username}}
+div(data-ng-if: 'user.temp')
+	| You are using a temporary account. Please register below to save your work!
+	br
+	input(placeholder: 'Username')
+	input(placeholder: 'Password')

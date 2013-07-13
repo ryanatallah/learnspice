@@ -3,9 +3,15 @@ var note = require('./note.js');
 
 module.exports = function(socket) {
 
+    socket.on('authenticate:tempuser', function(data) {
+        user.validTemp(data.userid, data.username, function() {
+            socket.emit('authenticate:tempuser', data);
+        });
+    });
+
     socket.on('authenticate:user', function(data) {
         user.authenticate(data.username, data.password, function(results) {
-            if (results) {
+            if (results.length) {
                 socket.emit('authenticate:user', {
                     userid: results[0]._id,
                     username: results[0].username
@@ -14,28 +20,48 @@ module.exports = function(socket) {
         });
     });
 
-    socket.on('create:user', function(data) {
-        user.create(data.username, data.email, data.password, function(results) {
-            if (results) {
-                socket.emit('create:user', {
+    socket.on('create:tempuser', function(data) {
+        user.createTemp(function(results) {
+            if (results.length) {
+                socket.emit('create:tempuser', {
+                    userid: results[0]._id,
                     username: results[0].username
                 });
             }
         });
     });
 
+    socket.on('create:user', function(data) {
+        user.validTemp(data.userid, data.username, function(){
+            user.validUsername(data.username, function() {
+                user.create(data.username, data.email, data.password, function(results) {
+                    if (results.length) {
+                        socket.emit('create:user', {
+                            userid: results[0]._id,
+                            username: results[0].username
+                        });
+                    }
+                });
+            });
+        });
+    });
+
     socket.on('create:note', function(data) {
         note.create(data.title, data.userid, function(results) {
-            if (results) {
-                socket.emit('create:note', {shortlink: results[0].shortlink});
+            if (results.length) {
+                socket.emit('create:note', {
+                    title: results[0].title,
+                    shortlink: results[0].shortlink
+                });
             }
         });
     });
 
     socket.on('create:section', function(data) {
+        // TODO
     });
 
     socket.on('create:line', function(data) {
-
+        // TODO
     });
 };
