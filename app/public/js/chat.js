@@ -5,13 +5,33 @@ window.onload = function() {
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
- 
+
+    socket.emit('load:messages', { noteid: 1 });
+
+    socket.on('send:messages', function (data) {
+        console.log('blahsasdfsf');
+        console.log(data.messages);
+        if (data) {
+            data.messages.forEach(function(e) {
+                messages.push(e.contents);
+                var html = '';
+                for(var i=0; i<messages.length; i++) {
+                    html += '<p>' + messages[i] + '</p>';
+                }
+                console.log("AHAHAHSAHASHDAS", data.contents);
+                content.innerHTML = html;
+            });
+        } else {
+            console.log("Oops. Problem:", data);
+        }
+    });
+
     socket.on('create:message', function (data) {
         if(data.contents) {
             messages.push(data.contents);
             var html = '';
             for(var i=0; i<messages.length; i++) {
-                html += messages[i] + '<br />';
+                html += '<p>' + messages[i] + '</p>';
             }
             console.log(data.contents);
             content.innerHTML = html;
