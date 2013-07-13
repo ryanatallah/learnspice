@@ -103,11 +103,46 @@ section + section {
 
 .section-header {
 	float: left;
-	width: 151px;
+	width: 191px;
+	text-align: right;
+}
+
+textarea {
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	border: none;
+	resize: none;
+	outline: none;
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	-webkit-transition: all 100ms linear;
+    -moz-transition:    all 100ms linear;
+    -o-transition:      all 100ms linear;
+    -ms-transition:     all 100ms linear;
+    transition:         all 100ms linear;
+}
+
+textarea:focus {
+	outline: none;
+	border: none;
+}
+
+.section-header .header-field {
 	padding: 20px 20px 20px 18px;
 	border-left: 2px solid #f5f5f5;
-	text-align: right;
+	background: #f5f5f5;
+	width: 151px;
 	font-weight: 600;
+	text-align: right;
+	border-left: 2px solid #f5f5f5;
+	padding: 20px 22px 20px 18px;
+}
+
+.section-header .header-field:focus {
+	border-left: 2px solid #0088cc;
+	padding-right: 18px;
+	padding-left: 20px;
 }
 
 .line-container {
@@ -117,29 +152,25 @@ section + section {
 	margin: 0;
 	list-style: none;
 	background-color: #fff;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
 }
 
 .line-container li textarea {
-	-webkit-transition: all 100ms linear;
-    -moz-transition:    all 100ms linear;
-    -o-transition:      all 100ms linear;
-    -ms-transition:     all 100ms linear;
-    transition:         all 100ms linear;
 	border-left: 2px solid #fff;
 	width: 335px;
-	display: block;
-	outline: none;
 	margin:0; padding:0; border:none; display:block;
-	font-family: 'Open Sans', sans-serif;
-	padding: 20px 20px 20px 18px;
+	padding: 20px 22px 20px 18px;
 	resize: none;
 	margin: 0;
-	-webkit-border-radius: 10px;
+	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
 }
 
 .line-container li textarea:focus {
+	padding-right: 20px;
 	border-left: 2px solid #0088cc;
 	background: #f5f5f5;
 }
