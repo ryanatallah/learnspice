@@ -8,14 +8,18 @@ module.exports = {
                 throw err;
             }
 
+            var collection = db.collection('users');
             collection.find({username: username}).toArray(function(err, results) {
                 console.dir(results);
-                
-                var salt = results.salt;
+
+                var salt = results[0].salt;
                 var sha256 = crypto.createHash("sha256");
                 sha256.update(password + salt, 'utf8');
                 var password_hash = sha256.digest('base64');
                 
+                console.log(salt);
+                console.log(password_hash);
+
                 collection.find({
                     username: username,
                     password_hash: password_hash

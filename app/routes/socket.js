@@ -6,7 +6,10 @@ module.exports = function(socket) {
     socket.on('authenticate:user', function(data) {
         user.authenticate(data.username, data.password, function(results) {
             if (results) {
-                socket.emit('authenticate:user', {userid: results._id});
+                socket.emit('authenticate:user', {
+                    userid: results[0]._id,
+                    username: results[0].username
+                });
             }
         });
     });
@@ -14,7 +17,9 @@ module.exports = function(socket) {
     socket.on('create:user', function(data) {
         user.create(data.username, data.email, data.password, function(results) {
             if (results) {
-                socket.emit('create:user', {userid: results._id});
+                socket.emit('create:user', {
+                    username: results[0].username
+                });
             }
         });
     });
@@ -22,7 +27,7 @@ module.exports = function(socket) {
     socket.on('create:note', function(data) {
         note.create(data.title, data.userid, function(results) {
             if (results) {
-                socket.emit('create:note', {shortlink: results.shortlink});
+                socket.emit('create:note', {shortlink: results[0].shortlink});
             }
         });
     });
