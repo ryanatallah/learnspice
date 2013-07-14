@@ -26,11 +26,14 @@ body {
     .header__logo {
         float: left;
         margin-bottom: -13px;
+        margin-left: -142px;
     }
     .header__slogan {
         clear: left;
         float: left;
         width: 157px;
+        margin-left: -10px;
+        margin-top: -8px;
 
         color: #b3b3b3;
         font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -42,7 +45,7 @@ body {
 
 .search {
     border-radius: 12px;
-    margin-bottom: 100px;
+    margin-bottom: 200px;
     padding: 40px 40px 30px;
 
     background-color: rgba(0, 0, 0, .13);
@@ -125,6 +128,7 @@ body {
                 font-weight: normal;
                 line-height: 15px;
                 text-align: right;
+                margin-left: 100px;
             }
 
 .twitter {
