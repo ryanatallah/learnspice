@@ -1,143 +1,62 @@
 'use strict';
 
-/* Controllers */
-
-angular.module('myApp.controllers', ['ngCookies']).controller('AppCtrl', function($scope, $cookies, socket) {
-    if ($cookies.user) {
-        var user = JSON.parse($cookies.user);
-        if (user.temp) {
-            socket.emit('check:tempuser', {userid: user.userid, username: user.username});
-        } else {
-            socket.emit('check:user', {userid: user.userid, username: user.username});
-        }
-    } else {
-        socket.emit('create:tempuser', {});
-    }
-
-    socket.on('check:tempuser', function(data) {
-        if(data) {
-            $scope.user = data;
-            $scope.user.temp = true;
-            setCookie('user', JSON.stringify(data), 30);
-        } else {
-            setCookie('user', '', 30);
-            socket.emit('create:tempuser', {});
-        }
-    });
-
-    socket.on('check:user', function(data) {
-        if(data) {
-            $scope.user = data;
-            setCookie('user', JSON.stringify(data), 30);
-        } else {
-            setCookie('user', '', 30);
-            socket.emit('create:tempuser', {});
-        }
-    });
-
-    socket.on('authenticate:user', function(data) {
-        $scope.user = data;
-        setCookie('user', JSON.stringify(data), 30);
-    });
-
-    socket.on('create:tempuser', function(data) {
-        $scope.user = data;
-        $scope.user.temp = true;
-        setCookie('user', JSON.stringify(data), 30);
-    });
-
-    socket.on('create:user', function(data) {
-        $scope.user = data;
-        setCookie('user', JSON.stringify(data), 30);
-    });
-
-    $scope.createUser = function() {
-        socket.emit('create:user', {userid: $scope.user.userid, oldUsername: $scope.user.username, username: $scope.newUsername, email: $scope.newEmail, password: $scope.newPassword});
+angular.module('myApp.controllers', []).controller('mainController', function($scope, $http, $location, $window, socket) {
+    $scope.user = {};
+    $scope.authenticate = function(provider) {
+        $window.location.href = '/auth/' + provider;
     };
+    $scope.logout = function() {
+        $http.post('/logout').success(function(){
+            $window.location.href = $location.path();
+        });
+    };
+    socket.on('self', function(data) {
+        $scope.user = data;
+    });
 }).controller('noteCreationController', function($scope, $location, socket) {
     socket.on('create:note', function(data) {
-        $location.path('/' + data.shortlink);
+        if(data) {
+            $location.path('/' + data.shortlink);
+        } else {
+            alert('Unable to create note.');
+        }
     });
-
     $scope.createNote = function() {
-        socket.emit('create:note', {userid: $scope.user.userid, title: $scope.noteTitle});
+        if($scope.user.id) {
+            socket.emit('create:note', {title: $scope.noteTitle});
+        } else {
+            alert('Login required.');
+        }
     };
 }).controller('noteController', function($scope, $routeParams, $location, socket) {
-    var shortlink = $routeParams.shortlink;
-
-    $scope.sections = [];
-    $scope.lines = [];
-
-    socket.emit('get:note', {shortlink: shortlink});
-
+    $scope.note = {};
     socket.on('get:note', function(data) {
         if (data) {
             $scope.note = data;
-
-            socket.emit('get:sections', {noteid: $scope.note.noteid});
-
-            socket.on('get:sections', function(data) {
-                $scope.sections = data;
-
-                socket.on('get:lines', function(data) {
-                    $scope.lines = data;
-                });
-
-                socket.on('create:line', function(data){
-                    $scope.lines.push(data);
-                });
-
-                socket.on('change:section', function(data){
-                    for (var i = 0; i < $scope.lines.length; i++) {
-                        if ($scope.lines[i]._id == data._id) {
-                            $scope.lines[i] = data._id;
-                            break;
-                        }
-                    }
-                });
-
-                $scope.addLine = function(sectionid) {
-                    console.log(sectionid);
-                    socket.emit('create:line', {shortlink: shortlink, noteid: $scope.note.noteid, sectionid: sectionid, userid: $scope.user.userid, content: $scope.newContent});
-                    $scope.newContent = '';
-                };
-            });
-
-            socket.on('create:section', function(data){
-                $scope.sections.push(data);
-            });
-
-            socket.on('change:section', function(data){
-                for (var i = 0; i < $scope.sections.length; i++) {
-                    if ($scope.sections[i]._id == data._id) {
-                        $scope.sections[i] = data._id;
-                        break;
-                    }
+            socket.on('update:section', function(data) {
+                if($scope.note.sections[data._id]) {
+                    data.lines = $scope.note.sections[data._id].lines;
                 }
+                $scope.note.sections[data._id] = data;
             });
-
+            socket.on('update:line', function(data) {
+                if(!$scope.note.sections[data.sectionid]) {
+                    $scope.note.sections[data.sectionid] = {};
+                }
+                $scope.note.sections[data.sectionid].lines[data._id] = data;
+            });
             $scope.addSection = function() {
-                socket.emit('create:section', {shortlink: shortlink, noteid: $scope.note.noteid, userid: $scope.user.userid, header: $scope.newHeader});
+                socket.emit('create:section', {header: $scope.newHeader});
                 $scope.newHeader = '';
+            };
+            $scope.addLine = function(sectionid) {
+                socket.emit('create:line', {sectionid: sectionid, content: $scope[sectionid + 'newContent']});
+                $scope[sectionid + 'newContent'] = '';
             };
         } else {
             $location.path('/');
         }
     });
+    socket.emit('get:note', {shortlink: $routeParams.shortlink});
 }).controller('ChatController', function($scope, socket) {
-    socket.on('send:messages', function(data) {
-        $scope.messages = data[0];
-        console.log('MESSAGES SENT');
-    });
-    socket.on('create:message', function(data) {
-        $scope.message = data[0];
-        console.log('Message posted: ' + data[0]);
-    });
 });
-
-function setCookie(c_name, value, exdays) {
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var c_value = escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-    document.cookie = c_name + "=" + c_value;
-}

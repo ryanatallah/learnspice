@@ -1,9 +1,3 @@
-/*
- * angular-socket-io v0.0.2
- * (c) 2013 Brian Ford http://briantford.com
- * License: MIT
- */
-
 'use strict';
 
 angular.module('btford.socket-io', []).

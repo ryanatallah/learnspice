@@ -1,0 +1,8 @@
+.row
+    .col-md-12
+        center
+            form.form-inline(role='form', ng-submit='createNote()')
+                .form-group
+                    input.form-control(type='text', placeholder='Note Title', ng-model='noteTitle')
+                .form-group
+                    button.btn.btn-primary.form-control(type='submit') Create Note

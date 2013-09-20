@@ -2,15 +2,15 @@
 
 angular.module('myApp', [
   'myApp.controllers',
+  'myApp.directives',
   'myApp.filters',
   'myApp.services',
-  'myApp.directives',
   'btford.socket-io'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: 'partials/partial1',
+      templateUrl: 'partials/createNote',
       controller: 'noteCreationController'
     }).
     when('/:shortlink', {
@@ -20,6 +20,5 @@ config(function ($routeProvider, $locationProvider) {
     otherwise({
       redirectTo: '/'
     });
-
   $locationProvider.html5Mode(true);
 });

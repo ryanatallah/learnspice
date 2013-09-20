@@ -1,29 +1,30 @@
-div#note-header.clearfix
-	div.wrapper
-		div#note-left
-			h3#note-title {{note.title}}
-			p#note-date Created 1 day ago
-		div#note-link-box
-			a#link learnspice.com/{{note.shortlink}}
-				a#share-button
-
-
-div#body-container.wrapper.clearfix
-	div#left-column
-		div#video-container
-		div#slides-container
-	div#right-column
-		section.clearfix(data-ng-repeat='section in sections')
-			div.section-header
-				textarea.header-field {{section.header}}
-			ul.line-container
-				li.line(data-ng-repeat='line in lines')
-					textarea.line-field {{line.content}}
-				li.line
-					textarea.line-field.add(data-ng-model='newContent')
-					button.btn(data-ng-click='addLine(section.sectionid)') Add
-		section.clearfix
-			div.section-header
-				textarea.header-field.add(data-ng-model='newHeader')
-				button.btn(data-ng-click='addSection()') Add
-
+.row
+    .col-md-3(align='center')
+        .row
+            .col-md-12 {{note.title}}
+        .row
+            .col-md-12 {{note.date_created}}
+    .col-md-3.col-md-offset-6(align='center') learnspice.com/{{note.shortlink}}
+.row
+    .col-md-3
+        .panel.panel-default
+            .panel-body
+                ul.lines
+                    li(ng-repeat='section in note.sections') {{section.header}}
+    .col-md-6
+        .panel.panel-default(ng-repeat='section in note.sections')
+            .panel-heading.basic
+                input.header(type='text', value='{{section.header}}', ng-disabled='!user._id||(section.editor&&section.editor!=user._id)', header-handler)
+            .panel-body.basic
+                ul.lines
+                    li(ng-repeat='line in section.lines')
+                        textarea.content(ng-disabled='!user._id||(line.editor&&line.editor!=user._id)', ng-model='line.content', msd-elastic, content-handler)
+                    li(ng-show='user.id')
+                        textarea.content(ng-model='$parent[section._id+"newContent"]', msd-elastic, content-handler)
+            .panel-footer.basic(ng-show='user.id')
+                button.btn.add(ng-click='addLine(section._id)') Add
+        .panel.panel-default(ng-show='user.id')
+            .panel-heading.basic
+                input.header(ng-model='newHeader', placeholder='New Section Name')
+            .panel-footer.basic
+                button.btn.add(ng-click='addSection()') Add
