@@ -1,18 +1,18 @@
 {
-	"name": "LearnSpice",
-	"version": "0.0.2",
-	"description": "Real-time notetaking",
-    "dependencies": {
-        "mongojs": "latest",
-        "socket.io": "latest",
-        "express": "latest",
-        "jade": "latest",
-        "connect": "latest",
-        "cookie": "latest",
-        "passport": "latest",
-        "passport-facebook": "latest",
-        "passport-google": "latest",
-        "passport.socket.io": "latest"
-    },
-	"author": "LearnSpice Team"
+  "name": "LearnSpice",
+  "version": "0.0.3",
+  "description": "Real-time notetaking",
+  "dependencies": {
+    "mongojs": "latest",
+    "socket.io": "latest",
+    "express": "latest",
+    "jade": "latest",
+    "connect": "latest",
+    "cookie": "latest",
+    "passport": "latest",
+    "passport-facebook": "latest",
+    "passport-google": "latest",
+    "passport.socket.io": "latest"
+  },
+  "author": "LearnSpice Team"
 }

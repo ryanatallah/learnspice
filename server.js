@@ -1,10 +1,8 @@
-var express = require('express');
 var config = require('./config.js');
 var routes = require('./routes');
-var http = require('http');
-var path = require('path');
+var express = require('express');
 var passport = require('passport');
-var cookieParser = express.cookieParser('secret');
+var cookieParser = express.cookieParser(config.web.secret);
 var sessionStore = new express.session.MemoryStore();
 
 var app = module.exports = express();
@@ -15,20 +13,17 @@ app.set('port', config.web.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
-//app.use(express.logger('dev'));
 app.use(cookieParser);
 app.use(express.bodyParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.session({ store: sessionStore, secret: 'secret', key: 'express.sid' }));
+app.use(express.static(__dirname + '/public'));
+app.use(express.session({ store: sessionStore, secret: config.web.secret, key: 'express.sid' }));
 app.use(express.methodOverride());
-app.use(express.errorHandler());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
 
-require('./routes/auth.js')(passport);
+require('./routes/passport.js')(passport);
 
-app.get('/', routes.index);
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/google', passport.authenticate('google'));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
@@ -37,12 +32,10 @@ app.post('/logout', routes.logout);
 app.get('/partials/:name', routes.partials);
 app.get('*', routes.index);
 
-io.set('authorization', require('passport.socket.io')(cookieParser, sessionStore, 'express.sid'));
+io.set('authorization', require('./socket/passport.js')(cookieParser, sessionStore));
 
-io.sockets.on('connection', function(socket) {
-    require('./routes/socket.js')(io.sockets, socket)
-});
+io.sockets.on('connection', require('./socket')(io.sockets));
 
-server.listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + app.get('port'));
+server.listen(app.get('port'), function () {
+  console.log('LearnSpice server listening on port ' + app.get('port'));
 });

@@ -1,74 +1,74 @@
 body {
-    padding-top: 70px;
+  padding-top: 70px;
 }
 
 div.basic {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 ul.lines {
-    padding: 0px;
-    margin: 0px;
+  padding: 0px;
+  margin: 0px;
 }
 
 ul.lines > li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 input.header {
-    width: 100%;
-    padding: 5px;
-    border: none;
-    border-left: transparent solid 2px;
-    border-right: transparent solid 2px;
-    outline: none;
-    resize: none;
-    background-color: transparent;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-left: transparent solid 2px;
+  border-right: transparent solid 2px;
+  outline: none;
+  resize: none;
+  background-color: transparent;
 }
 
 input.header:hover {
-    border-left: blue solid 2px;
+  border-left: blue solid 2px;
 }
 
 input.header:disabled {
-    border-right: red solid 2px;
+  border-right: red solid 2px;
 }
 
 input.header:focus {
-    border-right: limegreen solid 2px;
+  border-right: limegreen solid 2px;
 }
 
 textarea.content {
-    width: 100%;
-    word-wrap: break-word;
-    padding: 5px;
-    border: none;
-    border-left: transparent solid 2px;
-    border-right: transparent solid 2px;
-    outline: none;
-    resize: none;
-    background-color: transparent;
+  width: 100%;
+  word-wrap: break-word;
+  padding: 5px;
+  border: none;
+  border-left: transparent solid 2px;
+  border-right: transparent solid 2px;
+  outline: none;
+  resize: none;
+  background-color: transparent;
 }
 
 textarea.content:hover {
-    border-left: blue solid 2px;
+  border-left: blue solid 2px;
 }
 
 textarea.content:disabled {
-    border-right: red solid 2px;
+  border-right: red solid 2px;
 }
 
 textarea.content:focus {
-    border-right: limegreen solid 2px;
+  border-right: limegreen solid 2px;
 }
 
 button.add {
-    width: 100%;
-    background-color: transparent;
+  width: 100%;
+  background-color: transparent;
 }
 
 .row {
-    margin-right: 0px;
-    margin-left: 0px
+  margin-right: 0px;
+  margin-left: 0px
 }

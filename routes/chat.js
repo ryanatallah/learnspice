@@ -1,3 +1,3 @@
-exports.chat = function(req, res){
+exports.chat = function (req, res) {
   res.render('chat');
 };
